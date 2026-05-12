@@ -53,7 +53,7 @@ function showMessage() {
             <div class="envelope-back"></div>
             <div class="envelope-flap" id="envelopeFlap"></div>
             <div class="envelope-message" id="envelopeMessage">
-                <h3>Me toooo! 💕</h3>
+                <h3>Me toooo RoRooooo 🥰💕 </h3>
                 <button class="close-envelope" onclick="this.closest('.envelope-container').remove()">Close</button>
             </div>
         </div>
