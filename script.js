@@ -10,17 +10,32 @@ function moveButtonAway() {
     const container = document.querySelector('.container');
     const containerRect = container.getBoundingClientRect();
     
-    // Get random position within container bounds
-    const maxX = containerRect.width - 100;
-    const maxY = containerRect.height - 100;
+    // Get random position within viewport bounds (farther away)
+    const viewportMaxX = window.innerWidth - 150;
+    const viewportMaxY = window.innerHeight - 150;
     
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    // Generate random position anywhere on screen
+    let randomX = Math.random() * viewportMaxX;
+    let randomY = Math.random() * viewportMaxY;
     
-    // Apply new position
-    noBtn.style.position = 'absolute';
+    // Ensure button doesn't go off-screen
+    randomX = Math.max(10, Math.min(randomX, viewportMaxX));
+    randomY = Math.max(10, Math.min(randomY, viewportMaxY));
+    
+    // Apply new position with smooth transition
+    noBtn.style.position = 'fixed';
     noBtn.style.left = randomX + 'px';
     noBtn.style.top = randomY + 'px';
+    noBtn.style.transition = 'all 0.3s ease';
+    noBtn.style.zIndex = '999';
+    
+    // Add a little bounce effect
+    setTimeout(() => {
+        noBtn.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            noBtn.style.transform = 'scale(1)';
+        }, 200);
+    }, 300);
 }
 
 // Yes button click event
@@ -29,48 +44,44 @@ yesBtn.addEventListener('click', function() {
 });
 
 function showMessage() {
-    // Create custom modal instead of alert for better UX
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        text-align: center;
-        animation: fadeIn 0.3s ease;
+    // Create envelope container
+    const envelopeContainer = document.createElement('div');
+    envelopeContainer.className = 'envelope-container';
+    
+    envelopeContainer.innerHTML = `
+        <div class="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap" id="envelopeFlap"></div>
+            <div class="envelope-message" id="envelopeMessage">
+                <h3>Me toooo! 💕</h3>
+                <button class="close-envelope" onclick="this.closest('.envelope-container').remove()">Close</button>
+            </div>
+        </div>
     `;
     
-    modal.innerHTML = `
-        <h2 style="color: #ff6b6b; margin-bottom: 15px;">I know...</h2>
-        <p style="font-size: 1.2em; color: #333;">but want you to confirm it 💕</p>
-        <button onclick="this.parentElement.remove()" style="
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-        ">OK</button>
-    `;
+    document.body.appendChild(envelopeContainer);
     
-    // Add fade in animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    // Auto-open envelope after 1 second
+    setTimeout(() => {
+        const flap = document.getElementById('envelopeFlap');
+        const message = document.getElementById('envelopeMessage');
+        
+        if (flap) flap.classList.add('open');
+        if (message) message.classList.add('show');
+    }, 1000);
+    
+    // Also open on click
+    envelopeContainer.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('close-envelope')) {
+            const flap = document.getElementById('envelopeFlap');
+            const message = document.getElementById('envelopeMessage');
+            
+            if (flap && !flap.classList.contains('open')) {
+                flap.classList.add('open');
+                message.classList.add('show');
+            }
         }
-    `;
-    document.head.appendChild(style);
-    
-    document.body.appendChild(modal);
+    });
 }
 
 // Also move button when mouse gets close to it (works on all screen sizes)
@@ -81,8 +92,8 @@ document.addEventListener('mousemove', function(e) {
         Math.pow(e.clientY - (noBtnRect.top + noBtnRect.height / 2), 2)
     );
     
-    // If mouse is within 50px of the "No" button, move it
-    if (distance < 50) {
+    // If mouse is within 80px of the "No" button, move it (increased range)
+    if (distance < 80) {
         moveButtonAway();
     }
 });
@@ -133,8 +144,8 @@ document.addEventListener('touchmove', function(e) {
             Math.pow(touch.clientY - (noBtnRect.top + noBtnRect.height / 2), 2)
         );
         
-        // If finger is within 60px of the "No" button, move it
-        if (distance < 60) {
+        // If finger is within 100px of the "No" button, move it (increased range)
+        if (distance < 100) {
             moveButtonAway();
         }
     }
