@@ -104,20 +104,7 @@ noBtn.addEventListener('touchstart', function(e) {
     moveButtonAway();
     
     // Show a playful message
-    const message = document.createElement('div');
-    message.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #ff6b6b;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        font-size: 1.1em;
-        z-index: 1000;
-        animation: fadeInOut 2s ease;
-    `;
+  
     
     const style = document.createElement('style');
     style.textContent = `
