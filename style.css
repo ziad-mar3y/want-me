@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-image: url('wantMe2.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    text-align: center;
+    /* background: rgba(255, 255, 255, 0.9); */
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* backdrop-filter: blur(10px); */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ff5252;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.buttons {
+    display: grid;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.yes-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff8787);
+    color: white;
+}
+
+.yes-btn:hover {
+    background: linear-gradient(45deg, #ff5252, #ff6b6b);
+    transform: scale(1.05);
+}
+
+.no-btn {
+    background: linear-gradient(45deg, #6c757d, #868e96);
+    color: white;
+    position: absolute;
+}
+
+.no-btn:hover {
+    background: linear-gradient(45deg, #5a6268, #6c757d);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px 20px;
+        margin: 20px;
+        width: calc(100% - 40px);
+        max-width: 90%;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+    
+    .buttons {
+        flex-direction: row;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 1em;
+        width: 120px;
+    }
+    
+    }
+
+@media (max-width: 480px) {
+    .container {
+        padding: 25px 15px;
+        margin: 15px;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        width: 100px;
+    }
+}
+
+@media (max-width: 320px) {
+    h1 {
+        font-size: 1.3em;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.8em;
+        width: 80px;
+    }
+}
