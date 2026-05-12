@@ -105,7 +105,6 @@ noBtn.addEventListener('touchstart', function(e) {
     
     // Show a playful message
     const message = document.createElement('div');
-    message.textContent = "Nice try! 😊";
     message.style.cssText = `
         position: fixed;
         top: 50%;
