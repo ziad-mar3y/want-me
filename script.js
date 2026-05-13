@@ -41,6 +41,16 @@ function moveButtonAway() {
 // Yes button click event
 yesBtn.addEventListener('click', function() {
     showMessage();
+    // Hide the No button when Yes is clicked
+    noBtn.style.transition = 'all 0.5s ease';
+    noBtn.style.opacity = '0';
+    noBtn.style.transform = 'scale(0)';
+    noBtn.style.pointerEvents = 'none';
+    
+    // Completely remove after transition
+    setTimeout(() => {
+        noBtn.style.display = 'none';
+    }, 500);
 });
 
 function showMessage() {
@@ -53,22 +63,37 @@ function showMessage() {
             <div class="envelope-back"></div>
             <div class="envelope-flap" id="envelopeFlap"></div>
             <div class="envelope-message" id="envelopeMessage">
-                <h3>Me toooo RoRooooo 🥰💕 </h3>
-                <button class="close-envelope" onclick="this.closest('.envelope-container').remove()">Close</button>
+                
+                <h3> <h2>كنت عارف انك هتقولي ايوه علي طول من غير ما تفكري</h2><span>🥰</span> <span>💕</span><span>وانا كمان بحبك يا روروو</span> </h3>
+                <button class="close-envelope" onclick="closeEnvelope()">Close</button>
             </div>
         </div>
     `;
     
     document.body.appendChild(envelopeContainer);
     
-    // Auto-open envelope after 1 second
+    // Auto-open envelope after 1.5 seconds with smoother timing
     setTimeout(() => {
         const flap = document.getElementById('envelopeFlap');
         const message = document.getElementById('envelopeMessage');
         
-        if (flap) flap.classList.add('open');
-        if (message) message.classList.add('show');
-    }, 1000);
+        if (flap) {
+            flap.classList.add('open');
+            // Add subtle bounce after opening
+            setTimeout(() => {
+                flap.style.transform = 'rotateX(-180deg) scale(1.05)';
+                setTimeout(() => {
+                    flap.style.transform = 'rotateX(-180deg) scale(1)';
+                }, 200);
+            }, 1200);
+        }
+        
+        if (message) {
+            message.classList.add('show');
+            // Add gentle float animation
+            message.style.animation = 'float 3s ease-in-out infinite';
+        }
+    }, 1500);
     
     // Also open on click
     envelopeContainer.addEventListener('click', function(e) {
@@ -82,6 +107,26 @@ function showMessage() {
             }
         }
     });
+}
+
+function closeEnvelope() {
+    // Remove envelope with fade out
+    const envelope = document.querySelector('.envelope-container');
+    if (envelope) {
+        envelope.style.transition = 'all 0.5s ease';
+        envelope.style.opacity = '0';
+        envelope.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        
+        setTimeout(() => {
+            envelope.remove();
+            // Show No button again with smooth transition
+            noBtn.style.display = 'flex';
+            noBtn.style.transition = 'all 0.5s ease';
+            noBtn.style.opacity = '1';
+            noBtn.style.transform = 'scale(1)';
+            noBtn.style.pointerEvents = 'auto';
+        }, 500);
+    }
 }
 
 // Also move button when mouse gets close to it (works on all screen sizes)
